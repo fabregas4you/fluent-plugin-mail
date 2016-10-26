@@ -66,6 +66,8 @@ class Fluent::MailOutput < Fluent::Output
   config_param :time_locale,                    :default => nil
   desc "Specify Content-Type"
   config_param :content_type,         :string,  :default => "text/plain; charset=utf-8"
+  desc "Set Your Signature"
+  config_param :Signature,            :string,  :default => nil
 
   def initialize
     super
@@ -123,6 +125,10 @@ class Fluent::MailOutput < Fluent::Output
 
         [messages, subjects, dests]
       }
+    end
+    
+    if @Signature.nil?
+      raise Fluent::ConfigError, "'Signature' must be specified."
     end
 
     begin
@@ -242,6 +248,7 @@ Subject: #{subject}
 Message-Id: #{mid}
 Mime-Version: 1.0
 Content-Type: #{@content_type}
+X-My-Signature: #{@Signature}
 
 #{body}
 EOF
