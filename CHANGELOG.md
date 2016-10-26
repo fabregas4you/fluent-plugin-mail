@@ -1,3 +1,9 @@
+# 0.2.4.1
+
+Enhancements:
+
+* Add Signature (require) parameter
+
 # 0.2.4
 
 Enhancements:
